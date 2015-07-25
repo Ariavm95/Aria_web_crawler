@@ -5,6 +5,9 @@
  */
 package crawling_aria;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 
@@ -161,8 +164,13 @@ public class Crawling_Aria {
                
             }
            
-             Gson gson = new Gson();
+             //Gson gson = new Gson();
+             
+             Gson gson = new GsonBuilder().setPrettyPrinting().create();
              String json = gson.toJson(m);
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(json);
+            String prettyJsonString = gson.toJson(je);
                   
             try 
                 {
@@ -172,7 +180,7 @@ public class Crawling_Aria {
                              new FileOutputStream("Quote_Aria.json"), "Cp1252"));
                     
                     try {
-                        out.write(json);
+                        out.write(prettyJsonString);
                     } finally {
                          out.close();
                         }
